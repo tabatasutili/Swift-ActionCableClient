@@ -226,12 +226,12 @@ extension ActionCableClient {
     
     public func create(_ name: String, identifier: ChannelIdentifier?, autoSubscribe: Bool=true, bufferActions: Bool=true) -> Channel {
 		
-        var channelUID = name
+        let channelUID = name
         
         //if identifier isn't empty, fetch the first value as the channel unique identifier
-        if let dictionary = identifier?.first {
-            channelUID = dictionary.value as! String
-        }
+//         if let dictionary = identifier?.first {
+//             channelUID = dictionary.value as! String
+//         }
 		
         // Look in existing channels and return that
         if let channel = channels[channelUID] { return channel }
