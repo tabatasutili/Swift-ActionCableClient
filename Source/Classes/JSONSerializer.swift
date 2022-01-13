@@ -152,6 +152,10 @@ internal class JSONSerializer {
                   messageError = error
                 }
                 
+                if channelName == nil {
+                  return Message(channelName: "", actionName: messageActionName, messageType: MessageType.unrecognized, data: messageValue, error: messageError)
+                }
+                
                 return Message(channelName: channelName!,
                                actionName: messageActionName,
                                messageType: MessageType.message,
