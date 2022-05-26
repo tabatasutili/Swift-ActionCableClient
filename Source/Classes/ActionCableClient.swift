@@ -429,7 +429,8 @@ extension ActionCableClient {
                     DispatchQueue.main.async(execute: callback)
                 }
             case .message:
-                if let channel = channels[message.channelName!] {
+                guard let channelName = message.channelName else { break }
+                if let channel = channels[channelName] {
                     // Notify Channel
                     channel.onMessage(message)
                     
