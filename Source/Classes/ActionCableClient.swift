@@ -430,14 +430,15 @@ extension ActionCableClient {
                 }
             case .message:
                 guard let channelName = message.channelName else { break }
-                if let channel = channels[channelName] {
+		guard let channel = channels[channelName] else { break }
+                //if let channel = channels[channelName] {
                     // Notify Channel
                     channel.onMessage(message)
                     
                     if let callback = onChannelReceive {
                         DispatchQueue.main.async(execute: { callback(channel, message.data, message.error) } )
                     }
-                }
+                // }
             case .confirmSubscription:
 		guard let channelName = message.channelName else { break }
                 if let channel = unconfirmedChannels.removeValue(forKey: channelName) {
