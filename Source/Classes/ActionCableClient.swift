@@ -429,8 +429,8 @@ extension ActionCableClient {
                     DispatchQueue.main.async(execute: callback)
                 }
             case .message:
-                guard let channelName = message.channelName else { break }
-		guard let channel = channels[channelName] else { break }
+                guard let channelName = message.channelName else { return }
+		guard let channel = channels[channelName] else { return }
                 //if let channel = channels[channelName] {
                     // Notify Channel
                     channel.onMessage(message)
@@ -440,7 +440,7 @@ extension ActionCableClient {
                     }
                 // }
             case .confirmSubscription:
-		guard let channelName = message.channelName else { break }
+		guard let channelName = message.channelName else { return }
                 if let channel = unconfirmedChannels.removeValue(forKey: channelName) {
                     self.channels.updateValue(channel, forKey: channel.uid)
                     
@@ -452,7 +452,7 @@ extension ActionCableClient {
                     }
                 }
             case .rejectSubscription:
-		guard let channelName = message.channelName else { break }
+		guard let channelName = message.channelName else { return }
                 // Remove this channel from the list of unconfirmed subscriptions
                 if let channel = unconfirmedChannels.removeValue(forKey: channelName) {
                     
@@ -472,7 +472,7 @@ extension ActionCableClient {
                 fallthrough
               }
             case .cancelSubscription:
-		guard let channelName = message.channelName else { break }
+		guard let channelName = message.channelName else { return }
                 if let channel = channels.removeValue(forKey: channelName) {
                     
                     // Notify Channel
